@@ -8,7 +8,7 @@
  * @version v1.0.0
  *******************************************************/
 
-class core_Framework_Application
+abstract class core_Framework_Application
 {
     /**
      * 请求参数
@@ -57,7 +57,7 @@ class core_Framework_Application
      * 
      * @return void
      */
-    private function __construct() 
+    protected function __construct() 
     {
         $this->_requestTime = time();
     }
@@ -80,18 +80,14 @@ class core_Framework_Application
      * 
      * @return void
      */
-    public function setRequest() 
-    {
-    }
+    abstract public function setRequest();
 
     /**
      * 输出
      * 
      * @return mix
      */
-    public function doResponse($ret) 
-    {
-    }
+    abstract function doResponse($ret);
     
     /**
      * 执行
@@ -132,10 +128,7 @@ class core_Framework_Application
      * 
      * @return void
      */
-    public function startSession() 
-    {
-        
-    }
+    abstract public function startSession();
     
     /**
      * 处理单个请求

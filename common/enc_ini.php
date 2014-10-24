@@ -8,12 +8,16 @@
  * @version v1.0.0
  * ******************************************************/
 
-define('APP_DIR_ROOT', __DIR__ .'/../');
-define('APP_CORE_ROOT', APP_DIR_ROOT . 'core/');
+define('ROOT', __DIR__ .'/../');
+define('CORE_ROOT', ROOT . 'core/');
+define('APP_ROOT', ROOT . 'app/');
 
 // 自动加载函数注册
-require APP_CORE_ROOT . 'framework/loader.php';
+require CORE_ROOT . 'framework/loader.php';
 Loader::getInstance()->register();
 
 // 预定义的部分
-require APP_CORE_ROOT . 'framework/Common.php';
+require CORE_ROOT . 'framework/Common.php';
+
+// 加载应用
+require APP_ROOT . 'App.php';

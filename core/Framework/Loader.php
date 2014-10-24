@@ -44,7 +44,7 @@ class Loader
     private function __construct() 
     {
         $this->_registed = false;
-        $this->addSearchPath(APP_DIR);
+        $this->addSearchPath(APP_ROOT);
     }
     
     /**
