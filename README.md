@@ -1,2 +1,2 @@
-game-f
+tiny game server framwork
 ======
