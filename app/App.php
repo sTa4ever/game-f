@@ -86,7 +86,6 @@ class App extends core_Framework_Application
         } else {
             $this->request = new core_Request_Http();
         }
-        $this->checkBaseParam();
     }
     
     /**
