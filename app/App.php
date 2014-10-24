@@ -80,7 +80,7 @@ class App extends core_Framework_Application
     {
         if ($this->run_mode == 'api') {
             // api为游戏接口请求，从加密rawdata中获取数据
-            $this->request = new core_Request_Json(util_Security::decryptRawdata());
+            $this->request = new core_Request_Json(util_Security::decryptRawData());
         } elseif($this->run_mode == 'cli') {
             $this->request = new core_Request_Cli();
         } else {
@@ -105,8 +105,7 @@ class App extends core_Framework_Application
             $response = $ret;
         }
         if ($this->run_mode == 'api') {
-            echo util_Security::encryptResponse(
-                    util_Security::compressResponse($response));
+            echo core_Util_Secuity::encrypt(core_Util_Gzip::compress($response));
         } else {
             echo $response;
         }
@@ -148,9 +147,9 @@ class App extends core_Framework_Application
             );
         }
 
-		if(!util_Security::VerifySignatureMD5($method, $param)){
+		if(!core_Util_Sign::checkSign($method, $param)){
 			return array(
-                's'   => core_Config_ErrLogicCode::invalid_siginature,
+                's'   => core_Config_ErrLogicCode::ERR_SIGN_INVALID,
                 'msg' => 'invalid sign['.$param['sign'].']');
 		}
         return false;
