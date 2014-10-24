@@ -32,7 +32,7 @@ function getParam($param, $key, $require = true, $def = null)
 		return $param[$key];
 	} elseif ($require) {
 		throw new core_Exception_LogicAlertException("require param: no [$key] param", 
-            core_Config_ErrLogicCode::PARAM_NOT_EXISTS);
+            core_Config_ErrLogicCode::ERR_PARAM_NOT_EXISTS);
 	}
 	return $def;
 }

@@ -143,7 +143,7 @@ abstract class core_Framework_Application
 		$method = $tmp[1];
         if (!class_exists($class)){
             throw new core_Exception_LogicAlertException("class $class not exists",
-                core_Config_ErrLogicCode::CLASS_NOT_EXISTS);
+                core_Config_ErrLogicCode::ERR_CLASS_NOT_EXISTS);
         }
 		$inst = new $class($param);
 		$inst->run($method);

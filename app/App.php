@@ -141,14 +141,14 @@ class App extends core_Framework_Application
         $param = $this->request['p'];
 		if(!$param['sign']){
 		    return array(
-                's'   => core_Config_ErrLogicCode::ERR_SIGN_INVALID, 
+                's'   => config_StatusCode::ERR_SIGN_INVALID, 
                 'msg' =>'no signature',
             );
         }
 
 		if(!core_Util_Sign::checkSign($method, $param)){
 			return array(
-                's'   => core_Config_ErrLogicCode::ERR_SIGN_INVALID,
+                's'   => config_StatusCode::ERR_SIGN_INVALID,
                 'msg' => 'invalid sign['.$param['sign'].']');
 		}
         return false;

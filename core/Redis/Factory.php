@@ -38,7 +38,7 @@ class core_Redis_Factory
             return call_user_func_array(array($this->_redis, $method), $args);
         }
 		throw new core_Exception_LogicAlertException("Nout found method $method in " 
-                . get_class($this), core_Config_ErrLogicCode::INVALID_PARAM);
+            . get_class($this), core_Config_ErrLogicCode::ERR_METHOD_NOT_EXISTS);
 	}
 	
 	/**
