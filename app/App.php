@@ -98,7 +98,7 @@ class App extends core_Framework_Application
     {
         if (is_array($ret)){
             // 正常的返回值
-            $ret['_t'] = SVR_NOW;
+            $ret['_t'] = time();
             $response = json_encode($ret);
         }else{
             // 输出页面

@@ -111,8 +111,8 @@ abstract class core_Framework_Application
             );        
         }catch (exception $ex){
             $ret = array(
-                's'  =>'s_error',
-                'msg'=>$ex->getMessage(),
+                's'   => 's_error',
+                'msg' => $ex->getMessage(),
             );
         }
 

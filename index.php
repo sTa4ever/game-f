@@ -9,3 +9,6 @@
  *******************************************************/
 
 require __DIR__ . '/common/enc_ini.php';
+
+$mod = empty($_REQUEST['mod']) ? 'api' : $_REQUEST['mod'];
+App::getInstance()->run($mod);
