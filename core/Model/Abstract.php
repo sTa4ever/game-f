@@ -91,7 +91,7 @@ abstract class core_Model_Abstract implements ArrayAccess, IteratorAggregate, Co
             return true;
         }
         // 如果之前已经有数据，根据新的数据，进行merge覆盖
-        foreach( $data as $k=>$v ) {
+        foreach( $data as $k => $v ) {
             $this->_setdata($k, $v, false);
         }
     }
