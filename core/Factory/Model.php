@@ -156,38 +156,42 @@ class core_Factory_Model
         $sec          = $index['sec'];
         unset($index['sec']);
 
-        $dbparam = array('dbkey'=>$schema->db, 'sec'=>$sec, 'collection'=>$schema->coll);
-        $db      = core_Factory_Db::getMongo($dbparam);
-        // read from db  todo 不想在这个地方去操作数据库
-        $data   = $db->findOne($index, $query_fields);
-
+        $dbparam = array(
+            'dbkey'      => $schema->db, 
+            'sec'        => $sec, 
+            'collection' => $schema->coll
+        );
+        $db = core_Factory_Db::getMongo($dbparam);
+        $data = $db->findOne($index, $query_fields);
+        
         $model = self::getModel($name);
         $model->initWithData($data);
-
         return $model;
     }
 
     /**
      * 获取模型列表
      *
-     * @param array $options 选项
-     *                  sort
-     *                  limit
-     *                  skip
+     * @param string $name
+     * @param mix    $index
+     * @param array  $fields
+     * @param array $options 选项:sort limit skip
+     * @return model
      */
-    public static function getDocModelsWithCond($name, $index, $fields = array(), $options = array()){
-
-        $query_fields = array2path('',$fields);
+    public static function getDocModelsWithCond($name, $index, $fields = array(), $options = array())
+    {
+        $query_fields = array2path('', $fields);
         $models       = array();
         $schema       = self::getSchema($name);
         $sec          = $index['sec'];
-
         unset($index['sec']);
 
-        $dbparam = array('dbkey'=>$schema->db, 'sec'=>$sec, 'collection'=>$schema->coll);
-        $db      = core_Factory_Db::getMongo($dbparam);
-        // read from db  todo 不想在这个地方去操作数据库
-        //
+        $dbparam = array(
+            'dbkey'      => $schema->db, 
+            'sec'        => $sec, 
+            'collection' => $schema->coll
+        );
+        $db = core_Factory_Db::getMongo($dbparam);
 
         $iterator = $db->find($index, $query_fields);
         if (isset($options['sort'])) {
@@ -203,12 +207,10 @@ class core_Factory_Model
             $iterator = $iterator->limit($options['limit']);
         }
 
-        $datas   = iterator_to_array($iterator);
-
-        foreach($datas as  $k=>$v){
+        $datas = iterator_to_array($iterator);
+        foreach($datas as $k => $v){
             $model = self::getModel($name);
             $model->initWithData($datas[$k]);
-
             $models[] = $model;
 		}
 
@@ -217,40 +219,64 @@ class core_Factory_Model
 
     /**
      * 获取符合条件的结果条数
+     * 
+     * @param string $name
+     * @param mix    $index
+     * @return int
      */
     public static function getDocModelCount($name, $index) 
     {
-        $schema       = self::getSchema($name);
-        $sec          = $index['sec'];
-
+        $schema = self::getSchema($name);
+        $sec    = $index['sec'];
         unset($index['sec']);
 
-        $dbparam = array('dbkey'=>$schema->db, 'sec'=>$sec, 'collection'=>$schema->coll);
-        $db      = core_Factory_Db::getMongo($dbparam);
-
+        $dbparam = array(
+            'dbkey'      => $schema->db, 
+            'sec'        => $sec, 
+            'collection' => $schema->coll
+        );
+        $db = core_Factory_Db::getMongo($dbparam);
         return $db->find($index)->count();
     }
 
-    public static function getSchema($name){
-        if (substr($name, 0, 7)  != 'schema_'){
+    /**
+     * 获取model的schema
+     * 
+     * @param string $name
+     * @return array
+     * @throws core_Exception_LogicAlertException
+     */
+    public static function getSchema($name)
+    {
+        if (substr($name, 0, 7)  != 'schema_') {
             $name = ucfirst($name);
             $name = "schema_" . $name;
         }
-        if (!class_exists($name)){
-            throw new core_Exception_LogicAlertException("schema $name not exists, please define it first",core_ErrorCode::schema_not_found);
+        if (!class_exists($name)) {
+            throw new core_Exception_LogicAlertException(
+                "schema $name not exists, please define it first",
+                core_Config_ErrLogicCode::ERR_INVALID_PARAM);
         }
-        if (!isset(self::$_schemas[$name])){
+        if (empty(self::$_schemas[$name])) {
             self::$_schemas[$name] = new $name();
         }
         return self::$_schemas[$name];
     }
 
-    public static function getKV($name, $sec = null){
+    /**
+     * 获取redis的factory
+     * 
+     * @param string $name
+     * @param string $sec
+     * @return core_Redis_Factory
+     */
+    public static function getRedisFactory($name, $sec = null)
+    {
         $param = array(
-            'dbkey'=>$name,
-            'sec'=>$sec,
+            'dbkey' => $name,
+            'sec'   => $sec,
         );
-        $redis = core_Factory_Db::getRedis($param);
-        return new core_Redis_KV($redis);
+        $redis = core_Factory_Redis::getRedis($param);
+        return new core_Redis_Factory($redis);
     }
 }
