@@ -10,6 +10,7 @@
 
 abstract class core_Model_Abstract implements ArrayAccess, IteratorAggregate, Countable
 {
+    const DB_NULL_MARK = '_null';
     public $schema; // 视图，控制属性字段
 	public $root;   // 根节点
 	public $container = array (); // 存储子树对象
