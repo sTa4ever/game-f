@@ -124,7 +124,7 @@ class core_Factory_Model
             'sec'        => $sec, 
             'collection' => $schema->coll
         );
-        $db = core_Factory_Db::getMongo($dbparam);
+        $db = core_Factory_Mongo::getMongo($dbparam);
         $query = array(
             '_id'=>array(
                 '$in' => $index['ids'],
@@ -161,7 +161,7 @@ class core_Factory_Model
             'sec'        => $sec, 
             'collection' => $schema->coll
         );
-        $db = core_Factory_Db::getMongo($dbparam);
+        $db = core_Factory_Mongo::getMongo($dbparam);
         $data = $db->findOne($index, $query_fields);
         
         $model = self::getModel($name);
@@ -191,7 +191,7 @@ class core_Factory_Model
             'sec'        => $sec, 
             'collection' => $schema->coll
         );
-        $db = core_Factory_Db::getMongo($dbparam);
+        $db = core_Factory_Mongo::getMongo($dbparam);
 
         $iterator = $db->find($index, $query_fields);
         if (isset($options['sort'])) {
@@ -235,7 +235,7 @@ class core_Factory_Model
             'sec'        => $sec, 
             'collection' => $schema->coll
         );
-        $db = core_Factory_Db::getMongo($dbparam);
+        $db = core_Factory_Mongo::getMongo($dbparam);
         return $db->find($index)->count();
     }
 

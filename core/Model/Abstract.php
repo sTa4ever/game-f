@@ -358,9 +358,9 @@ abstract class core_Model_Abstract implements ArrayAccess, IteratorAggregate, Co
      * 
      * @return mongo
      */
-    public function getdb()
+    public function getMongo()
     {
-        return core_Factory_Db::getMongo($this->dbparam);
+        return core_Factory_Mongo::getMongo($this->dbparam);
     }
 
     /**

@@ -11,7 +11,7 @@
 class core_Factory_Redis extends core_Factory_Abstract
 {
     // redis实例
-    private static $m_redises = array();
+    private static $_redises = array();
     
     /**
      * 获取redis实例
@@ -29,9 +29,9 @@ class core_Factory_Redis extends core_Factory_Abstract
 
         $config = self::_getConfig($params['sec'], 'redis', $params['dbkey']);
         if (is_array($config)) {
-            $m_redis_key = $config['host'] . $config['port'];
-            if (isset(self::$m_redises[$m_redis_key])) {
-                return self::$m_redises[$m_redis_key];
+            $_redis_key = $config['host'] . $config['port'];
+            if (isset(self::$_redises[$_redis_key])) {
+                return self::$_redises[$_redis_key];
             }
             $redis = new Redis();
             $redis->pconnect($config['host'], $config['port']);
@@ -40,7 +40,7 @@ class core_Factory_Redis extends core_Factory_Abstract
             } else {
                 $redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP);
             }
-            self::$m_redises[$m_redis_key] = $redis;
+            self::$_redises[$_redis_key] = $redis;
             return $redis;
         }else{
             throw new core_Exception_LogicAlertException(
