@@ -24,9 +24,9 @@ class core_Factory_Model
     public static function getModel($name, $root = null)
     {
         $name       = ucfirst($name);
-        $model_name = "model_" . $name;
+        $model_name = 'model_' . $name;
         if (!class_exists($model_name)) {
-            $model_name = "core_Model_Embedded";
+            $model_name = 'core_Model_Embedded';
         }
         return new $model_name(self::getSchema($name), $root);     
     }
@@ -69,16 +69,7 @@ class core_Factory_Model
     public static function getEntireDocModel($name, $index)
     {
         // DocModel只能作为最外层的root，不能内嵌
-        $mod = self::getModel($name); 
-        $mod->setIndex($index);
-        if ($mod->modelType() == "core_Model_Doc"){
-            $mod->getFields(array());
-            return $mod;
-        }else{
-            throw new core_Exception_LogicAlertException(
-                "getDocModel name $name need to be docmodel", 
-                core_Config_ErrLogicCode::ERR_INVALID_PARAM);
-        }
+        return self::getDocModel($name, $index);
     }
 
     /**
@@ -94,7 +85,7 @@ class core_Factory_Model
     public static function getModelWithData($name, $root, $prikey, &$data, $new = false)
     {
         $mod = self::getModel($name, $root);
-        $mod->setIndex(array("_id" => $prikey));
+        $mod->setIndex(array('_id' => $prikey));
         $mod->initWithData($data, $new);
         return $mod;
     }
@@ -112,7 +103,8 @@ class core_Factory_Model
     public static function getDocModelsByIds($name, $index, $fields = array())
     {
         if (!isset($index['ids'])){
-            throw new core_Exception_LogicAlertException("ids is necessary when getDocModelsByIds", 
+            throw new core_Exception_LogicAlertException(
+                'ids is necessary when getDocModelsByIds', 
                 core_Config_ErrLogicCode::ERR_INVALID_PARAM);
         }
         $query_fields = array2path('', $fields);
@@ -131,10 +123,9 @@ class core_Factory_Model
             )
         );
         $datas = iterator_to_array($db->find($query, $query_fields));
-        foreach($datas as $k => $v){
+        foreach (array_keys($datas) as $k) {
             $model = self::getModel($name);
             $model->initWithData($datas[$k]);
-
             $models[] = $model;
 		}
         return $models;
