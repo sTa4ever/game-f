@@ -127,27 +127,33 @@ class core_Factory_Model
         $db = core_Factory_Db::getMongo($dbparam);
         $query = array(
             '_id'=>array(
-                '$in'=>$index['ids'],
+                '$in' => $index['ids'],
             )
         );
         $datas = iterator_to_array($db->find($query, $query_fields));
-        foreach($datas as $k=>$v){
+        foreach($datas as $k => $v){
             $model = self::getModel($name);
             $model->initWithData($datas[$k]);
 
             $models[] = $model;
 		}
-
         return $models;
     }
 
-    public static function getDocModelWithCond($name, $index, $fields = array()){
+    /**
+     * 根据条件获取model
+     * 
+     * @param string $name
+     * @param mix    $index
+     * @param array  $fields
+     * @return model
+     */
+    public static function getDocModelWithCond($name, $index, $fields = array())
+    {
 
         $query_fields = array2path('',$fields);
-        $models       = array();
         $schema       = self::getSchema($name);
         $sec          = $index['sec'];
-
         unset($index['sec']);
 
         $dbparam = array('dbkey'=>$schema->db, 'sec'=>$sec, 'collection'=>$schema->coll);
