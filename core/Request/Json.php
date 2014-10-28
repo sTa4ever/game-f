@@ -8,17 +8,19 @@
  * @version v1.0.0
  * ******************************************************/
 
-class core_Request_Json extends core_Request 
+class core_Request_Json extends core_Framework_Request 
 {
 
     private $json_str = null;
 
-    public function __construct($json) {
+    public function __construct($json) 
+    {
         $this->json_str = $json;
         parent::__construct();
     }
 
-    public function collectData() {
+    public function collectData() 
+    {
         $this->_data = json_decode($this->json_str, JSON_FORCE_OBJECT);
     }
 }

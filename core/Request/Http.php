@@ -8,12 +8,13 @@
  * @version v1.0.0
  *******************************************************/
 
-class core_Request_Http extends core_Request
+class core_Request_Http extends core_Framework_Request
 {
     private $_post = array();
     private $_get  = array();
 
-    public function collectData() {
+    public function collectData() 
+    {
         foreach($_REQUEST as $k => $v) {
             $this->_data[$k] = $v;
         }

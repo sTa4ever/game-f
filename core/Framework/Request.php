@@ -8,7 +8,7 @@
  * @version v1.0.0
  *******************************************************/
 
-class core_Request implements ArrayAccess
+class core_Framework_Request implements ArrayAccess
 {
     // 数据
     protected $_data = array();

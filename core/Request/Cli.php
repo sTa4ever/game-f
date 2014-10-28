@@ -8,9 +8,10 @@
  * @version v1.0.0
  *******************************************************/
 
-class core_Request_Cli extends core_Request 
+class core_Request_Cli extends core_Framework_Request 
 {
-    public function collectData() {
+    public function collectData() 
+    {
         global $argv, $argc;
         for($i = 1;$i < $argc; $i++){
             foreach(explode(',',$argv[$i]) as $val){
